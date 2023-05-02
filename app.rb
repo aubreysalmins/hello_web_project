@@ -9,6 +9,8 @@ class Application < Sinatra::Base
   end
 
   get '/names' do
+    
+
     return "Julia, Mary, Karim"
   end
 end

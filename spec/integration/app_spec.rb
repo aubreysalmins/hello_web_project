@@ -12,10 +12,20 @@ describe Application do
 
   context "GET /names" do
     it 'returns 200 OK' do
-      response = get('/names')
+      response = get('/names?')
 
       expect(response.status).to eq(200)
       expect(response.body).to eq("Julia, Mary, Karim")
+    end
+  end
+
+  context "POST/sort-names" do
+    it 'returns 200 OK' do
+      # Assuming the post with id 1 exists.
+      response = get('/sort-names?names=Joe,Alice,Zoe,Julia,Kieran')
+
+      expect(response.status).to eq(200)
+      expect(response.body).to eq(Alice,Joe,Julia,Kieran,Zoe)
     end
   end
 end
