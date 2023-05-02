@@ -29,7 +29,12 @@ Replace these with your own design.
 
 # Request:
 
-POST /albums
+POST /albums?
+
+# With body parameters:
+title=Voyage&
+release_year=2022&
+artist_id=2
 
 # Expected response:
 
@@ -46,22 +51,23 @@ describe Application do
 
   let(:app) { Application.new }
 
-  context "GET /" do
+  context "POST /albums" do
     it 'returns 200 OK' do
-      # Assuming the post with id 1 exists.
-      response = get('/posts?id=1')
+      response = get('/posts?title=Voyage&release_year=2022&artist_id=2')
+      repo = AlbumRepository.new
+      album = Album.new
+      album.title = params[:title]
+      album.release_year = params[:release_year]
+      album.artist_id = params[:artist_id]
+      repo.create(album)
 
       expect(response.status).to eq(200)
-      # expect(response.body).to eq(expected_response)
+      expect(response.body).to eq('')
+
+      response = get('/albums')
+      expect(response.body).to include('Voyage')
     end
 
-    it 'returns 404 Not Found' do
-      response = get('/posts?id=276278')
-
-      expect(response.status).to eq(404)
-      # expect(response.body).to eq(expected_response)
-    end
-  end
 end
 5. Implement the Route
 Write the route and web server code to implement the route behaviour.
